@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Liste des Tâches</title>
+    <link rel="stylesheet" href="/styles.css"> 
+</head>
+<body>
+<h1>Liste des Tâches</h1>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Titre</th>
+            <th>Description</th>
+            <th>Date d'Échéance</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="tache : ${taches}">
+            <td th:text="${tache.id}"></td>
+            <td th:text="${tache.titre}"></td>
+            <td th:text="${tache.description}"></td>
+            <td th:text="${#dates.format(tache.dateEcheance, 'yyyy-MM-dd')}"></td>
+            <td>
+                <div class="form">
+                    <form th:action="@{/taches/supprimer/{id}(id=${tache.id})}" method="post">
+                        <button type="submit">Supprimer</button>
+                    </form>
+                    <form th:action="@{/taches/modifier/{id}(id=${tache.id})}" method="get" style="display:inline;">
+                        <button type="submit">Édition</button> <!-- Bouton d'édition -->
+                    </form>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<a href="/taches/ajouter">Ajouter une nouvelle tâche</a>
+</body>
+</html>
